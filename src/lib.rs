@@ -11,6 +11,7 @@
 pub mod alu;
 pub mod bcd;
 pub mod bits;
+pub mod conformance;
 pub mod control;
 pub mod core;
 pub mod cpu;
@@ -21,6 +22,7 @@ pub mod loads;
 pub mod shifts;
 pub mod state;
 pub mod system;
+pub mod trace;
 
 pub use crate::core::{Bus, BusError, Cycle, AUTOVECTOR, M68000, SPURIOUS};
 pub use crate::cpu::StartError;
