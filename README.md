@@ -20,7 +20,7 @@ Pinned oracles, as m68000-python's `docs/conformance.md` requires:
 
 | What | Version |
 | --- | --- |
-| m68000-python (reference core and conformance kit) | 0.1.0 plus the conformance kit at commit `b3df005` (branch `conformance-kit`, local: main `38dbd0f` + the kit + the reader fix this port found) |
+| m68000-python (reference core and conformance kit) | 0.1.0 plus the conformance kit at commit `b3df005` (branch `conformance-kit`, [m68000-python#5](https://github.com/alewman/m68000-python/pull/5): main `38dbd0f` + the kit + the reader fix this port found) |
 | Trace schema | version 1 |
 | SingleStepTests/m68000 corpus | revision `64b253116a3de04aaac4346c43680960dc9b67e5` |
 | flamewing/68k-bcd-verifier | commit `39a01be528b0744302bf1dc9b3463fc22a3fc45f`, table SHA-256 `8432868c…80147e5` |
