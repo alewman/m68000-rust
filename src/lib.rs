@@ -27,3 +27,8 @@ pub mod trace;
 pub use crate::core::{Bus, BusError, Cycle, AUTOVECTOR, M68000, SPURIOUS};
 pub use crate::cpu::StartError;
 pub use crate::state::CpuState;
+
+/// The README's example compiles and runs as a doctest.
+#[cfg(doctest)]
+#[doc = include_str!("../README.md")]
+struct ReadmeDoctests;

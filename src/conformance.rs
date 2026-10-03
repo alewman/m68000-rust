@@ -258,8 +258,24 @@ pub fn manifest_from_json(value: &Value, base: &Path) -> Result<Manifest, String
                 devices.push(range(item, &format!("replay.devices[{index}]"))?);
             }
             let source = object(&spec["reads"], "replay.reads")?;
-            allowed(source, "replay.reads", &["file"], &["file"])?;
-            let bytes = file_bytes(source, "replay.reads", base)?;
+            allowed(source, "replay.reads", &["file", "data"], &[])?;
+            if source.contains_key("file") == source.contains_key("data") {
+                return Err("replay.reads must have exactly one of 'data' or 'file'".into());
+            }
+            let bytes = match source.get("data") {
+                Some(text) => {
+                    let text = text
+                        .as_str()
+                        .filter(|t| t.len() % 2 == 0)
+                        .ok_or("replay.reads.data must be a hexadecimal string")?;
+                    (0..text.len())
+                        .step_by(2)
+                        .map(|i| u8::from_str_radix(&text[i..i + 2], 16))
+                        .collect::<Result<Vec<u8>, _>>()
+                        .map_err(|_| "replay.reads.data must be a hexadecimal string")?
+                }
+                None => file_bytes(source, "replay.reads", base)?,
+            };
             if bytes.len() % 2 != 0 {
                 return Err("replay.reads must hold whole 16-bit values".into());
             }
@@ -570,11 +586,7 @@ pub fn trace_manifest(
             && matches!(kind, BoundaryKind::HaltedIdle | BoundaryKind::StoppedIdle)
             && events.peek().is_none()
         {
-            break if kind == BoundaryKind::HaltedIdle {
-                "halted"
-            } else {
-                "stopped"
-            };
+            break "idle";
         }
         if !record {
             clocks += u64::from(cpu.step());

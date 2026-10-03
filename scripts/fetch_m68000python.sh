@@ -4,7 +4,7 @@
 # that core and conformance kit.
 # Usage: scripts/fetch_m68000python.sh [destination]
 set -euo pipefail
-COMMIT=${M68000_PYTHON_COMMIT:-PINNED_COMMIT}
+COMMIT=${M68000_PYTHON_COMMIT:-b3df005081a06e66219a4fdc598e5e346e1a6cd4}
 DEST=${1:-"$(dirname "$0")/../external/m68000-python"}
 PYTHON=${PYTHON:-python3}
 if [ ! -d "$DEST/.git" ]; then

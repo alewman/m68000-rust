@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "name": "tas-drop",
+  "host": "flat",
+  "memory": [
+    {
+      "address": 4096,
+      "data": "4af830001038300072054ac14af830024e722700"
+    },
+    {
+      "address": 12288,
+      "data": "05008000"
+    }
+  ],
+  "initial": {
+    "pc": 4096,
+    "ssp": 32768
+  },
+  "tas_write": "drop",
+  "stop": {
+    "max_steps": 20
+  }
+}

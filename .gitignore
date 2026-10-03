@@ -1,4 +1,4 @@
 /target
 *.jsonl
-!/tests/data/*.jsonl
+!/tests/data/**/*.jsonl
 /external/
