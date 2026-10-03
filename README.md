@@ -23,6 +23,7 @@ Pinned oracles, as m68000-python's `docs/conformance.md` requires:
 | m68000-python (reference core and conformance kit) | 0.1.0 plus the conformance kit at commit `b3df005` (branch `conformance-kit`, [m68000-python#5](https://github.com/alewman/m68000-python/pull/5): main `38dbd0f` + the kit + the reader fix this port found) |
 | Trace schema | version 1 |
 | SingleStepTests/m68000 corpus | revision `64b253116a3de04aaac4346c43680960dc9b67e5` |
+| SingleStepTests/680x0 (rung 6, a detector) | revision `e0d5ece9670205cc84a0101081837deb446f86a3`, the `68000/v1` files |
 | flamewing/68k-bcd-verifier | commit `39a01be528b0744302bf1dc9b3463fc22a3fc45f`, table SHA-256 `8432868c…80147e5` |
 
 Ladder status at this commit, each rung reproduced with the script named
@@ -36,8 +37,10 @@ Ladder status at this commit, each rung reproduced with the script named
 | 3 | The reference's two MAME 0.285 lockstep recordings as `replay` manifests (real game code, its interrupts, every device read replayed), diffed in lockstep through a pipe | System 16B `altbeast`, 30 s: 24,597,382 records, 263,504,451 clocks; Genesis Altered Beast, 40 s: 28,253,448 records, 306,763,197 clocks; both `traces are identical`, 5 min 6 s and 5 min 49 s wall with the reference on PyPy | `rung3.sh` |
 | 4 | ABCD, SBCD and NBCD over every input against flamewing's hardware-verified table (T1) | `BCD tables: all 525,312 inputs agree` | `rung4.sh` |
 | 5 | The interrupt and STOP scenarios as manifests with events (`examples/conformance/interrupts/` in the reference) | all 20 `traces are identical` | `rung5.sh` |
+| 6 | SingleStepTests/680x0 (Tom Harte's corpus, CLK-generated, T3) as a detector: every disagreement sorted into the reference's named causes, and the table required to be the reference's line for line, as z80-rust's FUSE rung requires FUSE's six divergences | `787,660 of 1,000,060 cases agree`, 19 causes, identical to the reference's `scripts/classify_680x0.py` (9 s here, 33 s for the reference on PyPy) | `rung6.sh` |
 
-A gate that cannot fail proves nothing, so rung 2 was checked against two
+A gate that cannot fail proves nothing. Rung 6 fails on the first ADD.w
+case when V is never set for ADD.w, and rung 2 was checked against two
 seeded faults: V never set for ADD.w fails 250 cases, and TAS's write moved
 two clocks earlier (same total) fails 2,108 on `step_clocks` alone.
 
@@ -62,6 +65,8 @@ scripts/rung2.sh
 scripts/rung3.sh                     # needs the replay manifests, below
 scripts/rung4.sh
 scripts/rung5.sh
+scripts/fetch_680x0.sh               # SingleStepTests/680x0 (68000/v1) at the pinned revision
+scripts/rung6.sh
 ```
 
 ## Using the core
@@ -123,6 +128,7 @@ divergence between the two cores was found at any rung.
   for `python -m m68000_python.conformance diff manifest -`.
 - `m68k-vectors <dir>`: the SingleStepTests/m68000 runner (rung 2).
 - `m68k-bcd [table]`: the BCD table check (rung 4).
+- `m68k-680x0 <dir>`: the 680x0 corpus classified as the reference classifies it (rung 6).
 - `m68k-bench`: the reference's four benchmark workloads.
 
 ## Speed

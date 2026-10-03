@@ -57,3 +57,15 @@ logs.
 No divergence between the cores was found at any rung, so neither core was
 changed for behavior. The only change in the reference this port caused is
 the reader fix above, in its tooling.
+
+## 2026-10-03: rung 6
+
+- The user asked to continue with the transcription. z80-rust's rung 6 is
+  FUSE, an emulator-derived set run natively with its divergences pinned;
+  the 68000's counterpart is SingleStepTests/680x0, which the reference
+  runs as a detector and classifies (its validation.md, "Rung 5").
+- `m68k-680x0` transcribes the reference's 680x0 harness and classifier;
+  `scripts/rung6.sh` diffs the two tables. Identical on the first run:
+  787,660 of 1,000,060 agree, the same 19 causes with the same counts and
+  files (9 s here, 33 s for the reference on PyPy). With V never set for
+  ADD.w, ADD.w cases come out unclassified and the run fails.
