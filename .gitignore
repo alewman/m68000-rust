@@ -1,0 +1,4 @@
+/target
+*.jsonl
+!/tests/data/*.jsonl
+/external/

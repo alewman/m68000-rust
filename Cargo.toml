@@ -1,0 +1,19 @@
+[package]
+name = "m68000-rust"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+description = "A Rust MC68000 instruction core transcribed from, and proven equivalent to, m68000-python"
+license = "MIT"
+repository = "https://github.com/alewman/m68000-rust"
+publish = false
+
+[lib]
+name = "m68000_rust"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+[profile.release]
+debug = 1
