@@ -453,7 +453,7 @@ fn main() -> ExitCode {
     );
     // most_common(): by count, descending; ties keep first-seen order (a stable sort).
     let mut table: Vec<(String, u64)> = order.iter().map(|c| (c.clone(), counts[c])).collect();
-    table.sort_by(|a, b| b.1.cmp(&a.1));
+    table.sort_by_key(|entry| std::cmp::Reverse(entry.1));
     for (cause, count) in table {
         let mut shown = files[&cause].clone();
         shown.sort();
