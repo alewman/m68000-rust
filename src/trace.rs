@@ -256,9 +256,9 @@ pub fn record_to_json(record: &StepRecord) -> String {
             out.push_str("\"}");
         }
     }
-    write!(
+    writeln!(
         out,
-        ",\"kind\":\"{}\",\"sequence\":{},\"version\":{}}}\n",
+        ",\"kind\":\"{}\",\"sequence\":{},\"version\":{}}}",
         record.kind.as_str(),
         record.sequence,
         TRACE_SCHEMA_VERSION

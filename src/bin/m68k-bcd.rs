@@ -46,7 +46,14 @@ impl Bus for Nops {
     }
 }
 
-fn run(cpu: &mut M68000<Nops>, opcode: u16, destination: u32, source: u32, x: bool, z: bool) -> [u8; 2] {
+fn run(
+    cpu: &mut M68000<Nops>,
+    opcode: u16,
+    destination: u32,
+    source: u32,
+    x: bool,
+    z: bool,
+) -> [u8; 2] {
     let mut d = [0; 8];
     d[0] = destination;
     d[1] = source;

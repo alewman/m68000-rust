@@ -78,8 +78,8 @@ impl<B: Bus> M68000<B> {
     ///
     /// The branch target's word is read before Dn is written, so an odd
     /// target faults with Dn unchanged and stacks the instruction's address
-    /// + 4: SST DBcc. WinUAE run stacks the target + 2 instead: contested,
-    /// the core follows the gate.
+    /// plus 4: SST DBcc. WinUAE run stacks the target plus 2 instead:
+    /// contested, the core follows the gate.
     pub(crate) fn op_dbcc(&mut self, opcode: u16) -> Step {
         let register = usize::from(opcode & 7);
         if condition(opcode, self.sr) {

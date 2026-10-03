@@ -81,8 +81,8 @@ pub fn divide_unsigned_clocks(dividend: u32, divisor: u32) -> u32 {
 
 /// DIVS's internal clocks: sign handling, then one step per quotient bit.
 ///
-/// `dividend` and `divisor` are signed. Absolute overflow (|dividend| >> 16
-/// >= |divisor|) is found early; otherwise the unsigned loop runs on the
+/// `dividend` and `divisor` are signed. Absolute overflow
+/// (`|dividend| >> 16 >= |divisor|`) is found early; otherwise the unsigned loop runs on the
 /// magnitudes and each of the 15 high quotient bits that is 0 costs 2
 /// clocks (Cwik 2005, T2; checked against the corpus, T3).
 pub fn divide_signed_clocks(dividend: i64, divisor: i64) -> u32 {
@@ -159,6 +159,7 @@ impl<B: Bus> M68000<B> {
     // -- the shapes ------------------------------------------------------------
 
     /// Refill the queue and write Dn; a long spends 2 or 4 more clocks (Table 8-4).
+    #[allow(clippy::wrong_self_convention)] // the reference's name, `_to_data_register`
     pub(crate) fn to_data_register(
         &mut self,
         register: usize,
