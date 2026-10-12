@@ -623,6 +623,7 @@ impl<B: Bus> M68000<B> {
         let cycle = crate::core::Cycle {
             fc: self.fc(false),
             step_clocks: self.cycles,
+            irc: self.irc,
         };
         if let Err(BusError) = self
             .bus

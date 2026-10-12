@@ -99,6 +99,11 @@ pub struct Cycle {
     /// callable). In `acknowledge` the cycle's own four clocks are not yet
     /// counted.
     pub step_clocks: u32,
+    /// The prefetch queue's second word, IRC, as the access begins (the
+    /// reference's `irc` attribute read inside a callable): at a data access
+    /// it is the next opcode word, which a board drives onto an undriven
+    /// data bus (megadrive-python's open bus).
+    pub irc: u16,
 }
 
 /// The host: memory and every device.
@@ -125,6 +130,16 @@ pub trait Bus {
     /// `write_byte`.
     fn tas_write(&mut self, address: u32, value: u8, cycle: Cycle) -> Result<(), BusError> {
         self.write_byte(address, value, cycle)
+    }
+
+    /// Clocks the host adds to [`M68000::clock`] once `acknowledge` has
+    /// answered, before an autovectored acknowledge reads the E clock from
+    /// it. The reference's host may set `clock` inside its acknowledge
+    /// callable (megadrive-python credits the bus holds of the instruction
+    /// so far there); a Rust host cannot reach the CPU from its bus, so it
+    /// returns the amount here. The default adds nothing.
+    fn acknowledge_clock_credit(&mut self) -> u64 {
+        0
     }
 
     /// Told about the access an address error aborted, which never reaches
@@ -217,6 +232,7 @@ impl<B: Bus> M68000<B> {
         Cycle {
             fc: self.fc(program),
             step_clocks: self.cycles,
+            irc: self.irc,
         }
     }
 
