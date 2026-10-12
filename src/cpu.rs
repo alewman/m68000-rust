@@ -120,6 +120,7 @@ impl<B: Bus> M68000<B> {
         let cycle = Cycle {
             fc: self.fc(true),
             step_clocks: self.cycles,
+            irc: self.irc,
         };
         let ir = self.bus.read_word(address & MASK24, cycle);
         let ir = ir.map_err(|BusError| StartError::Bus)?;
@@ -299,8 +300,10 @@ impl<B: Bus> M68000<B> {
         let cycle = Cycle {
             fc: FC_CPU_SPACE,
             step_clocks: self.cycles,
+            irc: self.irc,
         };
         let answer = self.bus.acknowledge(level, cycle);
+        self.clock += self.bus.acknowledge_clock_credit();
         self.cycles += 4;
         let vector = if answer == AUTOVECTOR {
             // VPA: the cycle waits for the E clock (CLK/10) as the manual
