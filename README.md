@@ -20,7 +20,7 @@ Pinned oracles, as m68000-python's `docs/conformance.md` requires:
 
 | What | Version |
 | --- | --- |
-| m68000-python (reference core and conformance kit) | commit `27c3792` (2026-11-19, wave 2's second pass: nothing rests on MAME's header-less microcode files; [docs/provenance.md](docs/provenance.md)); before that `7b11f4d` (the rewrite of the divide clocks and divide-by-zero flags), and before that 0.1.0 plus the conformance kit at commit `b3df005` (branch `conformance-kit`, [m68000-python#5](https://github.com/alewman/m68000-python/pull/5): main `38dbd0f` + the kit + the reader fix this port found) |
+| m68000-python (reference core and conformance kit) | commit `4454d54` (2026-11-20, the history reset: the tree of the removed `dd93178`, which is `27c3792` plus one docs line; `27c3792` was wave 2's second pass: nothing rests on MAME's header-less microcode files; [docs/provenance.md](docs/provenance.md)). Hashes below, and those cited in docs/, name the history removed on 2026-11-20 (this repository's and the reference's). Before that `7b11f4d` (the rewrite of the divide clocks and divide-by-zero flags), and before that 0.1.0 plus the conformance kit at commit `b3df005` (branch `conformance-kit`, [m68000-python#5](https://github.com/alewman/m68000-python/pull/5): main `38dbd0f` + the kit + the reader fix this port found) |
 | Trace schema | version 1 |
 | SingleStepTests/m68000 corpus | revision `64b253116a3de04aaac4346c43680960dc9b67e5` |
 | SingleStepTests/680x0 (rung 6, a detector) | revision `e0d5ece9670205cc84a0101081837deb446f86a3`, the `68000/v1` files |
