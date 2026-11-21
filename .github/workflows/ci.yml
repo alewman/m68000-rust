@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+  VECTORS_REVISION: 64b253116a3de04aaac4346c43680960dc9b67e5
+
+jobs:
+  build:
+    name: fmt, clippy, test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - run: cargo fmt --check
+      - run: cargo clippy --release --all-targets -- -D warnings
+      - run: cargo test --release
+
+  rung2:
+    name: "rung 2: SingleStepTests/m68000 317,500 cases"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Cache the pinned SingleStepTests/m68000 corpus
+        uses: actions/cache@v4
+        with:
+          path: external/m68000_test_vectors
+          key: singlesteptests-m68000-${{ env.VECTORS_REVISION }}
+      - run: scripts/fetch_test_vectors.sh external/m68000_test_vectors
+      - run: scripts/rung2.sh external/m68000_test_vectors/v1
+
+  rung4:
+    name: "rung 4: BCD tables, 525,312 inputs"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: scripts/rung4.sh

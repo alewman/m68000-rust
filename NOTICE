@@ -1,0 +1,14 @@
+m68000-rust
+Copyright (c) 2026 alewman. Licensed under the MIT License (LICENSE).
+
+No third-party code is included. A transcription of m68000-python (MIT, same
+author), whose NOTICE lists the sources it credits. The DIVU/DIVS clock rule
+is fitted to the SingleStepTests/m68000 corpus (Copyright (c) 2024
+SingleStepTests, MIT), which the rungs fetch and never commit. Musashi's BCD
+mechanism (Karl Stenerud, MIT) is described in m68000-python's docs and
+followed in src/bcd.rs. The autovector E-clock rule in src/cpu.rs is stated
+in our own words from MAME's m68000.cpp (Olivier Galibert, BSD-3-Clause); no
+MAME code is reproduced, and MAME's header-less m68000 files (m68000gen.py,
+m68000.lst, the generated handlers; GPL) are not used. WinUAE
+(GPL-2.0-or-later) and MAME are otherwise only run, as closed boxes, by
+m68000-python's tooling.

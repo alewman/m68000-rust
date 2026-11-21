@@ -1,0 +1,7 @@
+/target
+*.jsonl
+!/tests/data/**/*.jsonl
+/external/
+
+# Code removed unread in the 2026-11-19 provenance rewrite (docs/provenance.md).
+/trash/
